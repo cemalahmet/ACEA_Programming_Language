@@ -3,6 +3,6 @@
 CS 315 Project
 
 **TODO:**
-b.l deki sorunlar çözülecek
-Rapora yazı yazılacak (analiz vs.)
-Örnek kod yazılacak
+b.l deki sorunlar çözülecek    
+Rapora yazı yazılacak (analiz vs.)    
+Örnek kod yazılacak    
