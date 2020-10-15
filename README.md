@@ -2,7 +2,6 @@
 
 CS 315 Project
 
-**TODO:**
-b.l deki sorunlar çözülecek    
+**TODO:**   
 Rapora yazı yazılacak (analiz vs.)    
 Örnek kod yazılacak    
