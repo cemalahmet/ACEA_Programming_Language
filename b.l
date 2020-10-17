@@ -16,6 +16,7 @@ end   printf("END ");
 \{ printf("LCB ");
 \} printf("RCB ");
 \; printf("SEMICOLON ");
+\, printf("COMMA ");
 
 {const} printf("CONST ");
 
@@ -34,6 +35,7 @@ end   printf("END ");
 \>\= printf("GREATER_EQUAL_OP");
 
 if printf("IF ");
+else printf("ELSE ");
 for printf("FOR ");
 do printf("DO ");
 while printf("WHILE ");
