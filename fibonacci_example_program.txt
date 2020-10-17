@@ -1,0 +1,34 @@
+begin
+
+nl = 10; /* ascii code of new line */
+
+/* Get how many fibonacci numbers to compute */
+
+__scan(number);
+
+last1 = 1;
+last2 = 0;
+
+/* Compute and print fibonacci numbers */ 
+if (number > 0) {
+	__print(last1);
+	__print(nl);
+	number = number - 1;
+}
+
+if (number > 0) {
+	__print(last2);
+	__print(nl);
+	number = number - 1;
+}
+
+while (number > 0) {
+	temp  = last2;
+	last2 = last1;
+	last1 = temp + last1;
+	__print(last1);
+	__print(nl);
+	number = number - 1;
+}
+
+end
