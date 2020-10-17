@@ -1,28 +1,30 @@
 %option main
 digit [0-9]
 sign [+-]
-letter [\_a-zA-Z]
+letter [a-zA-Z\_]
 const {sign}?{digit}*(\.)?{digit}+
-identifier {letter}({letter}|{digit})+
-string [a-zA-Z0-9\_]+
-comment \/\*{string}\*\/
+identifier {letter}({letter}|{digit})*
+comment_start \/\* 
+comment_end   \*\/
 %%
+
+begin printf("BEGIN ");
+end   printf("END ");
 
 \( printf("LP ");
 \) printf("RP ");
 \{ printf("LCB ");
 \} printf("RCB ");
-
+\; printf("SEMICOLON ");
 
 {const} printf("CONST ");
 
 \= printf("ASSIGNMENT_OP ");
 \- printf("MINUS ");
 \+ printf("PLUS ");
-\* printf("TIMES ");
+\* printf("TIMES "); 
 
-
-{comment} printf("COMMENT ");
+{comment_start}.*{comment_end} printf("COMMENT ");
 
 \=\= printf("EQUAL_OP ");
 \!\= printf("NOT_EQUAL_OP ");
@@ -35,6 +37,8 @@ if printf("IF ");
 for printf("FOR ");
 do printf("DO ");
 while printf("WHILE ");
+return printf("RETURN ");
+func printf("FUNCTION ");
 
 \_\_scan printf("INPUT_FUNC ");
 \_\_print printf("OUTPUT_FUNC ");
@@ -53,4 +57,3 @@ while printf("WHILE ");
 \_\_connection printf("CONNECTION_VAR ");
 
 {identifier} printf("IDENTIFIER ");
-
