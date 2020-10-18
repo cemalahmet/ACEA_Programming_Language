@@ -1,0 +1,28 @@
+begin
+
+__connect()
+__up(55);
+temperature = __temperature;
+if (temperature < 30) { /* if temperature is less than 30 degrees Celcius */
+	__take_photo();
+	__left_flip();
+} else {
+	__front_flip();
+	__rotate_left(20); /* rotate left by 20 degrees */
+}
+__timer_start();
+for (num = 0;__timer_time() < 50; num++) {
+	__up(20);
+	__forward(20);
+	__take_photo();
+}
+__timer_stop();
+
+__print("The drone took ");
+__print(num + temperature < 30);
+__print(" pictures!\n");
+
+__land();
+__disconnect();
+
+end
