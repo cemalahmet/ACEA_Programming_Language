@@ -1,0 +1,89 @@
+# 2.1. Program
+<program> ::= begin <stmts> end
+<stmts> ::= <stmt> | <stmt> <stmts> | <comment> <stmts> | <comment>
+<stmt> ::= <matched_if> | <unmatched_if>
+<non_if_stmt> ::= <assn_stmt> | <do_while_stmt> |
+		     <for_stmt> | <return_stmt> | <while_stmt> |
+	 	    <input_stmt> | <output_stmt> | <function_stmt> | <empty_stmt> | <block_stmt> | 			    <function_definition> | <declaration_stmt>
+<comment> ::= /* <string> */
+<string> ::= <non_empty_string> | <empty>
+<non_empty_string> ::= <char> <string> | <char>
+<char> ::= <digit> | <letter> | ! | ‘ | ? | ( | ) | * …
+<empty> ::= “”
+
+# 2.2. Types
+<identifier> ::= <identifier><letter> | <letter> | <identifier><digit>
+<type_name> ::= num | string
+<const> ::= <num_type> | <string_type>
+<num_type> ::= [+-]?[0-9]*(\.)? [0-9]+
+<string_type> ::= “<string>”
+
+# 2.3. Expressions
+<expression> ::= <expression> <logical_op> <logic> | <logic>
+<logic>::= <logic> <relational_op> <relation> | <relation>
+<relation> ::= <relation> <low_op> <term> | <term>
+<term> ::= <term> <high_op> <factor> | <factor>
+<factor> ::= (<expression>) | <identifier> |
+		<const> | <function_call> | <builtin_variable> | !<expression>
+<high_op> ::= * | / | %
+<low_op> ::= + | - 
+<relational_op> ::= < | > | == | != | <= | >=
+<logical_op> ::= “&&” | “||”
+
+# 2.4. Functions 
+<function_definition> ::= <type_name> <function_identifier>(<function_arguments>) {<stmts>}
+<function_identifier> ::= <identifier>
+<function_arguments> ::=  <non_empty_function_arguments> | <empty>
+<non_empty_function_arguments> ::= <type_name> <identifier> |
+			       <type_name> <identifier>, <non_empty_function_arguments>
+<function_call_arguments> ::= <empty> | <non_empty_function_call_arguments>
+<non_empty_function_call_arguments> ::= <expression> | <expression>, 										<non_empty_function_call_arguments>
+<user_function_call> ::= <function_identifier>(<function_call_arguments>)
+<function_call> ::= <user_function_call> | <builtin_function>
+
+# 2.5. Statements
+<block_stmt> ::= {<stmts>}
+
+<declaration> ::= <type_name> <identifier> | 
+		     final <type_name> <identifier>
+<declaration_identifiers> ::= <identifier> | <identifier> , <declaration_identifiers>
+<multiple_declaration> ::= <type_name> <declaration_identifiers> | 
+			  <final> <type_name> <declaration_identifiers>
+
+<declaration_stmt> ::= <declaration> ; | <multiple_declaration> ;
+
+<assn_stmt> ::= <identifier> = <expression> ; |
+		   <declaration> = <expression> ;
+
+<matched_if> ::= if (<expression>) <stmt> |
+		      <non_if_stmt>
+<unmatched_if> ::= if (<expression>) <stmt> |
+		         if (<expression>) <matched> else <unmatched>
+
+<while_stmt> ::= while (<expression>) <stmt>
+<do_while_stmt> ::= do <stmt> while (<expression>) ;
+
+<for_stmt> ::= for (<init_stmt> <for_expression> <looping_stmt>) <stmt>
+<init_stmt> ::= <assn_stmt> | <empty_stmt>
+<for_expression> ::= <expression> ; | <empty_stmt>
+<looping_stmt> ::= <identifier> = <expression> | <empty>
+
+<input_stmt> ::= __scan(<identifier>);
+<output_stmt> ::= __print(<expression>);
+
+<function_stmt> ::= <function_call> ;
+<return_stmt> ::= return ; | return <expression> ;
+
+# 2.6. Built-in Functions and Variables
+
+<builtin_variable> ::= __incline | __altitude | __temperature |
+			 __acceleration | __connection
+<builtin_function> ::= __up(<expression>) | forward(<expression>) |
+__left(<expression>) | __right(<expression>) |
+__back(<expression>) | __down(<expression>) |
+__rotate_left(<expression>) | __rotate_right(<expression>) |
+__back_flip() | __front_flip() | __right_flip() | __left_flip() |
+__land() | __switch_camera() | __take_picture() |
+__timer_start() | __timer_stop() | __timer_time() | __connect() |
+__disconnect()
+
