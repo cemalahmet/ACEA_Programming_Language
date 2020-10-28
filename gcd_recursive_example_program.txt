@@ -1,31 +1,23 @@
 begin
 
-/* This function returns x modulo y */ 
-/* Prereq: both constants are positive whole numbers */
-func modulo(x, y) {
-	if (x < y) {
-		return x;	
-	} else {
-		return modulo(x-y, y);
-	}
-}
-
 /* This function calculates the gcd of two constants */
 /* Prereq: both constants are positive whole numbers. */
-func gcd(x, y) {
-	if (y != 0) {
-		return gcd(y, modulo(x, y));	
-	} else {
+num gcd(num x, num y) {
+	if (y != 0)
+		return gcd(y, x % y);	
+	else
 		return x;
-	}
 }
 
 /* Below statements are not in a function so they are executed directly. */
 
+num x, y;
 __scan(x);
 __scan(y);
-return = gcd(x,y);
+
+num result = gcd(x,y);
+
 __print(result);
-__print(10); /* new line */
+__print("\n");
 
 end

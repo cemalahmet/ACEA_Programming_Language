@@ -12,6 +12,7 @@ string \".*\"
 begin printf("BEGIN ");
 end   printf("END ");
 
+\_ printf("UNDERSCORE ");
 \( printf("LP ");
 \) printf("RP ");
 \{ printf("LCB ");
@@ -19,13 +20,18 @@ end   printf("END ");
 \; printf("SEMICOLON ");
 \, printf("COMMA ");
 
-{num} printf("NUM ");
-{string} printf("STRING ");
+final printf("FINAL ");
+num printf("NUM ");
+string printf("STRING ");
+
+{num} printf("NUM_CONST ");
+{string} printf("STRING_CONST ");
 
 \= printf("ASSIGNMENT_OP ");
 \- printf("MINUS ");
 \+ printf("PLUS ");
 \* printf("TIMES "); 
+\% printf("MODULO ");
 
 {comment_start}.*{comment_end} printf("COMMENT ");
 
@@ -36,6 +42,10 @@ end   printf("END ");
 \<\= printf("LESS_EQUAL_OP ");
 \>\= printf("GREATER_EQUAL_OP");
 
+\&\& printf("LOGICAL_AND_OP ");
+\|\| printf("LOGICAL_OR_OP ");
+\! printf("LOGICAL_NOT_OP ");
+
 if printf("IF ");
 else printf("ELSE ");
 for printf("FOR ");
@@ -44,34 +54,33 @@ while printf("WHILE ");
 return printf("RETURN ");
 func printf("FUNCTION ");
 
-\_\_scan printf("INPUT_FUNC ");
-\_\_print printf("OUTPUT_FUNC ");
-\_\_switch_camera printf("CAMERA_ON_OFF_FUNC ");
-\_\_take_picture printf("PHOTO_FUNC ");
-\_\_timer_start printf("TIMER_START_FUNC ");
-\_\_timer_stop printf("TIMER_STOP_FUNC ");
-\_\_timer_time printf("TIMER_TIME_FUNC ");
-\_\_connect printf("CONNECT_FUNC ");
-\_\_disconnect printf("DISCONNECT_FUNC ");
-__up printf("UP_FUNC ");
-__forward printf("FORWARD_FUNC ");
-__left printf("LEFT_FUNC ");
-__right printf("RIGHT_FUNC ");
-__back printf("BACK_FUNC ");
-__down printf("DOWN_FUNC ");
-__rotate_left printf("ROTATE_LEFT_FUNC ");
-__rotate_right printf("ROTATE_RIGHT_FUNC ");
-__back_flip printf("BACK_FLIP_FUNC ");
-__front_flip printf("FRONT_FLIP_FUNC ");
-__right_flip printf("RIGHT_FLIP_FUNC ");
-__left_flip printf("LEFT_FLIP_FUNC ");
-__land printf("LAND_FUNC ");
+scan printf("INPUT_FUNC ");
+print printf("OUTPUT_FUNC ");
+switch_camera printf("CAMERA_ON_OFF_FUNC ");
+take_picture printf("PHOTO_FUNC ");
+timer_start printf("TIMER_START_FUNC ");
+timer_stop printf("TIMER_STOP_FUNC ");
+timer_time printf("TIMER_TIME_FUNC ");
+connect printf("CONNECT_FUNC ");
+disconnect printf("DISCONNECT_FUNC ");
+up printf("UP_FUNC ");
+forward printf("FORWARD_FUNC ");
+left printf("LEFT_FUNC ");
+right printf("RIGHT_FUNC ");
+back printf("BACK_FUNC ");
+down printf("DOWN_FUNC ");
+rotate_left printf("ROTATE_LEFT_FUNC ");
+rotate_right printf("ROTATE_RIGHT_FUNC ");
+back_flip printf("BACK_FLIP_FUNC ");
+front_flip printf("FRONT_FLIP_FUNC ");
+right_flip printf("RIGHT_FLIP_FUNC ");
+left_flip printf("LEFT_FLIP_FUNC ");
+land printf("LAND_FUNC ");
 
-
-\_\_incline printf("INCLINE_VAR " );
-\_\_altitude printf("ALTITUDE_VAR ");
-\_\_temperature printf("TEMPERATURE_VAR ");
-\_\_acceleration printf("ACCELERATION_VAR ");
-\_\_connection printf("CONNECTION_VAR ");
+incline printf("INCLINE_VAR " );
+altitude printf("ALTITUDE_VAR ");
+temperature printf("TEMPERATURE_VAR ");
+acceleration printf("ACCELERATION_VAR ");
+connection printf("CONNECTION_VAR ");
 
 {identifier} printf("IDENTIFIER ");

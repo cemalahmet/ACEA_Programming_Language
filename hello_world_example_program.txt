@@ -1,16 +1,7 @@
+
 begin
 
-__print( 72); /* 'H'  */
-__print(101); /* 'e'  */
-__print(108); /* 'l'  */
-__print(108); /* 'l'  */
-__print(111); /* 'o'  */
-__print( 32); /* ' '  */
-__print( 87); /* 'W'  */
-__print(111); /* 'o'  */
-__print(114); /* 'r'  */
-__print(108); /* 'l'  */
-__print(100); /* 'd'  */
-__print( 10); /* '\n' */
+string text = "Hello World!\n";
+__print(text);
 
 end
