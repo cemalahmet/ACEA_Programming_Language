@@ -2,9 +2,9 @@
 <program> ::= begin <stmts> end
 <stmts> ::= <stmt> | <stmt> <stmts> | <comment> <stmts> | <comment>
 <stmt> ::= <matched_if> | <unmatched_if>
-<non_if_stmt> ::= <assn_stmt> | <do_while_stmt> |
-		     <for_stmt> | <return_stmt> | <while_stmt> |
-	 	    <input_stmt> | <output_stmt> | <function_stmt> | <empty_stmt> | <block_stmt> | 			    <function_definition> | <declaration_stmt>
+<non_if_stmt> ::= <assn_declare_stmt> | <do_while_stmt> | <for_stmt> | <return_stmt> | <while_stmt> |
+	 	  <input_stmt> | <output_stmt> | <function_stmt> | <empty_stmt> | 
+		  <block_stmt> | <function_definition>
 <comment> ::= /* <string> */
 <string> ::= <non_empty_string> | <empty>
 <non_empty_string> ::= <char> <string> | <char>
@@ -14,6 +14,7 @@
 # 2.2. Types
 <identifier> ::= <identifier><letter> | <letter> | <identifier><digit>
 <type_name> ::= num | string
+<type_declare> ::= <type_name> | final <type_name>
 <const> ::= <num_type> | <string_type>
 <num_type> ::= [+-]?[0-9]*(\.)? [0-9]+
 <string_type> ::= “<string>”
@@ -24,7 +25,7 @@
 <relation> ::= <relation> <low_op> <term> | <term>
 <term> ::= <term> <high_op> <factor> | <factor>
 <factor> ::= (<expression>) | <identifier> |
-		<const> | <function_call> | <builtin_variable> | !<expression>
+		<const> | <function_call> | <builtin_variable> | !<factor> 
 <high_op> ::= * | / | %
 <low_op> ::= + | - 
 <relational_op> ::= < | > | == | != | <= | >=
@@ -44,21 +45,13 @@
 # 2.5. Statements
 <block_stmt> ::= {<stmts>}
 
-<declaration> ::= <type_name> <identifier> | 
-		     final <type_name> <identifier>
-<declaration_identifiers> ::= <identifier> | <identifier> , <declaration_identifiers>
-<multiple_declaration> ::= <type_name> <declaration_identifiers> | 
-			  <final> <type_name> <declaration_identifiers>
+<assn> ::= <identifier> = <expression>
+<assn_declare> ::= <assn> | <identfier>
+<multiple_assn_declare> ::= <assn_declare> | <assn_declare> , <multiple_assn_declare> 
+<assn_declare_stmt> ::= <type_declare> <multiple_assn_declare> ;
 
-<declaration_stmt> ::= <declaration> ; | <multiple_declaration> ;
-
-<assn_stmt> ::= <identifier> = <expression> ; |
-		   <declaration> = <expression> ;
-
-<matched_if> ::= if (<expression>) <stmt> |
-		      <non_if_stmt>
-<unmatched_if> ::= if (<expression>) <stmt> |
-		         if (<expression>) <matched> else <unmatched>
+<matched_if> ::= if (<expression>) <stmt> | <non_if_stmt>
+<unmatched_if> ::= if (<expression>) <stmt> | if (<expression>) <matched_if> else <unmatched_if>
 
 <while_stmt> ::= while (<expression>) <stmt>
 <do_while_stmt> ::= do <stmt> while (<expression>) ;

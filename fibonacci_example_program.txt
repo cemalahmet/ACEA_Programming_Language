@@ -5,11 +5,7 @@ begin
 num number;
 __scan(number);
 
-num last1, last2, temp;
-
-last1 = 1;
-last2 = 0;
-
+num last1 = 1, last2 = 0, temp;
 
 /* Compute and print fibonacci numbers */ 
 if (number > 0) {
