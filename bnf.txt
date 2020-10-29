@@ -32,11 +32,11 @@
 <logical_op> ::= “&&” | “||”
 
 # 2.4. Functions 
-<function_definition> ::= <type_name> <function_identifier>(<function_arguments>) {<stmts>}
+<function_definition> ::= <type_declare> <function_identifier>(<function_arguments>) {<stmts>}
 <function_identifier> ::= <identifier>
 <function_arguments> ::=  <non_empty_function_arguments> | <empty>
-<non_empty_function_arguments> ::= <type_name> <identifier> |
-			       <type_name> <identifier>, <non_empty_function_arguments>
+<non_empty_function_arguments> ::= <type_declare> <identifier> |
+			       <type_declare> <identifier>, <non_empty_function_arguments>
 <function_call_arguments> ::= <empty> | <non_empty_function_call_arguments>
 <non_empty_function_call_arguments> ::= <expression> | <expression>, 										<non_empty_function_call_arguments>
 <user_function_call> ::= <function_identifier>(<function_call_arguments>)
@@ -51,7 +51,7 @@
 <multiple_assn_declare> ::= <assn_declare> | <assn_declare> , <multiple_assn_declare> 
 <assn_declare_stmt> ::= <type_declare> <multiple_assn_declare> ;
 
-<matched_if> ::= if (<expression>) <stmt> | <non_if_stmt>
+<matched_if> ::= if (<expression>) <matched_if> else <matched_if> | <non_if_stmt>
 <unmatched_if> ::= if (<expression>) <stmt> | if (<expression>) <matched_if> else <unmatched_if>
 
 <while_stmt> ::= while (<expression>) <stmt>

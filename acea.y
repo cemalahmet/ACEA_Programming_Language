@@ -5,7 +5,7 @@
 int lineno = 1;
 %}
 
-%token BEGIN END UNDERSCORE IDENTIFIER LP RP LCB RCB SEMICOLON COMMA FINAL NUM STRING NUM_CONST STRING_CONST ASSIGNMENT_OP COMMENT LOGICAL_NOT_OP IF ELSE FOR DO WHILE RETURN FUNCTION INPUT_FUNC OUTPUT_FUNC CAMERA_ON_OFF_FUNC PHOTO_FUNC TIMER_START_FUNC TIMER_STOP_FUNC TIMER_TIME_FUNC CONNECT_FUNC DISCONNECT_FUNC UP_FUNC FORWARD_FUNC LEFT_FUNC RIGHT_FUNC BACK_FUNC DOWN_FUNC ROTATE_LEFT_FUNC ROTATE_RIGHT_FUNC BACK_FLIP_FUNC FRONT_FLIP_FUNC RIGHT_FLIP_FUNC LEFT_FLIP_FUNC LAND_FUNC INCLINE_VAR ALTITUDE_VAR TEMPERATURE_VAR ACCELERATION_VAR CONNECTION_VAR
+%token BEGIN END UNDERSCORE IDENTIFIER LP RP LCB RCB SEMICOLON COMMA FINAL NUM STRING NUM_CONST STRING_CONST ASSIGNMENT_OP COMMENT LOGICAL_NOT_OP IF ELSE FOR DO WHILE RETURN INPUT_FUNC OUTPUT_FUNC CAMERA_ON_OFF_FUNC PHOTO_FUNC TIMER_START_FUNC TIMER_STOP_FUNC TIMER_TIME_FUNC CONNECT_FUNC DISCONNECT_FUNC UP_FUNC FORWARD_FUNC LEFT_FUNC RIGHT_FUNC BACK_FUNC DOWN_FUNC ROTATE_LEFT_FUNC ROTATE_RIGHT_FUNC BACK_FLIP_FUNC FRONT_FLIP_FUNC RIGHT_FLIP_FUNC LEFT_FLIP_FUNC LAND_FUNC INCLINE_VAR ALTITUDE_VAR TEMPERATURE_VAR ACCELERATION_VAR CONNECTION_VAR
 
 %left MINUS PLUS TIMES DIVIDE MODULO EQUAL_OP NOT_EQUAL_OP GREATER_OP LESS_OP LESS_EQUAL_OP GREATER_EQUAL_OP LOGICAL_AND_OP LOGICAL_OR_OP 
 
@@ -32,10 +32,10 @@ low_op : PLUS | MINUS
 relational_op : LESS_OP | GREATER_OP | EQUAL_OP | NOT_EQUAL_OP | LESS_EQUAL_OP | GREATER_EQUAL_OP ;
 logical_op : LOGICAL_AND_OP | LOGICAL_OR_OP ;
 
-function_definition : type_name function_identifier LP function_arguments RP LCB stmts RCB ;
+function_definition : type_declare function_identifier LP function_arguments RP LCB stmts RCB ;
 function_identifier : IDENTIFIER ;
-function_arguments : non_empty_function_arguments | empty
-non_empty_function_arguments : type_name identifier | type_name identifier COMMA non_empty_function_arguments ;
+function_arguments : non_empty_function_arguments | empty ;
+non_empty_function_arguments : type_declare identifier | type_declare identifier COMMA non_empty_function_arguments ;
 function_call_arguments : empty | non_empty_function_call_arguments ;
 non_empty_function_call_arguments : expression | expression COMMA non_empty_function_call_arguments ;
 user_function_call : function_identifier LP function_call_arguments RP ;
@@ -48,7 +48,7 @@ assn : identifier ASSIGNMENT_OP expression ;
 assn_declare : assn | identifier ;
 multiple_assn_declare : assn_declare | assn_declare COMMA  multiple_assn_declare ;
 assn_declare_stmt : type_declare multiple_assn_declare SEMICOLON ;
-matched_if : IF LP expression RP stmt | non_if_stmt ;
+matched_if : IF LP expression RP matched_if ELSE matched_if | non_if_stmt ;
 unmatched_if : IF LP expression RP stmt | IF LP expression RP matched_if ELSE unmatched_if ;
 while_stmt : WHILE LP expression RP stmt ;
 do_while_stmt : DO stmt WHILE LP expression RP SEMICOLON ;

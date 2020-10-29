@@ -9,7 +9,7 @@ comment_end   \*\/
 string \".*\"
 %%
 
-\n {extern int lineno; lineno++; return NL;}
+\n {extern int lineno; lineno++}
 
 begin return BEGIN;
 end   return END;
@@ -33,6 +33,7 @@ string return STRING;
 \- return MINUS;
 \+ return PLUS;
 \* return TIMES; 
+\/ return DIVIDE
 \% return MODULO;
 
 {comment_start}.*{comment_end} return COMMENT;
@@ -54,7 +55,6 @@ for return FOR;
 do return DO;
 while return WHILE;
 return return RETURN;
-func return FUNCTION;
 
 scan return INPUT_FUNC;
 print return OUTPUT_FUNC;
@@ -85,7 +85,7 @@ temperature return TEMPERATURE_VAR;
 acceleration return ACCELERATION_VAR;
 connection return CONNECTION_VAR;
 
-{identifier} return "IDENTIFIER;
+{identifier} return IDENTIFIER;
 
 %%
 int yywrap() {return 1;}
