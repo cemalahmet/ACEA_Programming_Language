@@ -2,9 +2,9 @@
 <program> ::= begin <stmts> end
 <stmts> ::= <stmt> | <stmt> <stmts> | <comment> <stmts> | <comment>
 <stmt> ::= <matched_if> | <unmatched_if>
-<non_if_stmt> ::= <assn_declare_stmt> | <do_while_stmt> | <for_stmt> | <return_stmt> | <while_stmt> |
-	 	  <input_stmt> | <output_stmt> | <function_stmt> | <empty_stmt> | 
-		  <block_stmt> | <function_definition>
+<non_if_stmt> ::= <assn_stmt> | <assn_declare_stmt> | <do_while_stmt> | <for_stmt> | 
+		  <return_stmt> | <while_stmt> | <input_stmt> | <output_stmt> | 
+		  <function_stmt> | <empty_stmt> | <block_stmt> | <function_definition>
 <comment> ::= /* <string> */
 <string> ::= <non_empty_string> | <empty>
 <non_empty_string> ::= <char> <string> | <char>
@@ -44,7 +44,8 @@
 
 # 2.5. Statements
 <block_stmt> ::= {<stmts>}
-
+<empty_stmt> ::= ;
+<assn_stmt> ::= <assn> ;
 <assn> ::= <identifier> = <expression>
 <assn_declare> ::= <assn> | <identfier>
 <multiple_assn_declare> ::= <assn_declare> | <assn_declare> , <multiple_assn_declare> 
@@ -57,9 +58,9 @@
 <do_while_stmt> ::= do <stmt> while (<expression>) ;
 
 <for_stmt> ::= for (<init_stmt> <for_expression> <looping_stmt>) <stmt>
-<init_stmt> ::= <assn_stmt> | <empty_stmt>
+<init_stmt> ::= <assn_declare_stmt> | <assn_stmt> | <empty_stmt>
 <for_expression> ::= <expression> ; | <empty_stmt>
-<looping_stmt> ::= <identifier> = <expression> | <empty>
+<looping_stmt> ::= <assn> | <empty>
 
 <input_stmt> ::= __scan(<identifier>);
 <output_stmt> ::= __print(<expression>);

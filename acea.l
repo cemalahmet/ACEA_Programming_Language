@@ -9,78 +9,84 @@ comment_end   \*\/
 string \".*\"
 %%
 
-begin printf("BEGIN ");
-end   printf("END ");
+\n {extern int lineno; lineno++; return NL;}
 
-\_ printf("UNDERSCORE ");
-\( printf("LP ");
-\) printf("RP ");
-\{ printf("LCB ");
-\} printf("RCB ");
-\; printf("SEMICOLON ");
-\, printf("COMMA ");
+begin return BEGIN;
+end   return END;
 
-final printf("FINAL ");
-num printf("NUM ");
-string printf("STRING ");
+\_ return UNDERSCORE;
+\( return LP;
+\) return RP;
+\{ return LCB;
+\} return RCB;
+\; return SEMICOLON;
+\, return COMMA;
 
-{num} printf("NUM_CONST ");
-{string} printf("STRING_CONST ");
+final return FINAL;
+num return NUM;
+string return STRING;
 
-\= printf("ASSIGNMENT_OP ");
-\- printf("MINUS ");
-\+ printf("PLUS ");
-\* printf("TIMES "); 
-\% printf("MODULO ");
+{num} return NUM_CONST;
+{string} return STRING_CONST;
 
-{comment_start}.*{comment_end} printf("COMMENT ");
+\= return ASSIGNMENT_OP;
+\- return MINUS;
+\+ return PLUS;
+\* return TIMES; 
+\% return MODULO;
 
-\=\= printf("EQUAL_OP ");
-\!\= printf("NOT_EQUAL_OP ");
-\>  printf("GREATER_OP");
-\<  printf("LESS_OP");
-\<\= printf("LESS_EQUAL_OP ");
-\>\= printf("GREATER_EQUAL_OP");
+{comment_start}.*{comment_end} return COMMENT;
 
-\&\& printf("LOGICAL_AND_OP ");
-\|\| printf("LOGICAL_OR_OP ");
-\! printf("LOGICAL_NOT_OP ");
+\=\= return EQUAL_OP;
+\!\= return NOT_EQUAL_OP;
+\>  return GREATER_OP;
+\<  return LESS_OP;
+\<\= return LESS_EQUAL_OP;
+\>\= return GREATER_EQUAL_OP;
 
-if printf("IF ");
-else printf("ELSE ");
-for printf("FOR ");
-do printf("DO ");
-while printf("WHILE ");
-return printf("RETURN ");
-func printf("FUNCTION ");
+\&\& return LOGICAL_AND_OP;
+\|\| return LOGICAL_OR_OP;
+\! return LOGICAL_NOT_OP;
 
-scan printf("INPUT_FUNC ");
-print printf("OUTPUT_FUNC ");
-switch_camera printf("CAMERA_ON_OFF_FUNC ");
-take_picture printf("PHOTO_FUNC ");
-timer_start printf("TIMER_START_FUNC ");
-timer_stop printf("TIMER_STOP_FUNC ");
-timer_time printf("TIMER_TIME_FUNC ");
-connect printf("CONNECT_FUNC ");
-disconnect printf("DISCONNECT_FUNC ");
-up printf("UP_FUNC ");
-forward printf("FORWARD_FUNC ");
-left printf("LEFT_FUNC ");
-right printf("RIGHT_FUNC ");
-back printf("BACK_FUNC ");
-down printf("DOWN_FUNC ");
-rotate_left printf("ROTATE_LEFT_FUNC ");
-rotate_right printf("ROTATE_RIGHT_FUNC ");
-back_flip printf("BACK_FLIP_FUNC ");
-front_flip printf("FRONT_FLIP_FUNC ");
-right_flip printf("RIGHT_FLIP_FUNC ");
-left_flip printf("LEFT_FLIP_FUNC ");
-land printf("LAND_FUNC ");
+if return IF;
+else return ELSE;
+for return FOR;
+do return DO;
+while return WHILE;
+return return RETURN;
+func return FUNCTION;
 
-incline printf("INCLINE_VAR " );
-altitude printf("ALTITUDE_VAR ");
-temperature printf("TEMPERATURE_VAR ");
-acceleration printf("ACCELERATION_VAR ");
-connection printf("CONNECTION_VAR ");
+scan return INPUT_FUNC;
+print return OUTPUT_FUNC;
+switch_camera return CAMERA_ON_OFF_FUNC;
+take_picture return PHOTO_FUNC;
+timer_start return TIMER_START_FUNC;
+timer_stop return TIMER_STOP_FUNC;
+timer_time return TIMER_TIME_FUNC;
+connect return CONNECT_FUNC;
+disconnect return DISCONNECT_FUNC;
+up return UP_FUNC;
+forward return FORWARD_FUNC;
+left return LEFT_FUNC;
+right return RIGHT_FUNC;
+back return BACK_FUNC;
+down return DOWN_FUNC;
+rotate_left return ROTATE_LEFT_FUNC;
+rotate_right return ROTATE_RIGHT_FUNC;
+back_flip return BACK_FLIP_FUNC;
+front_flip return FRONT_FLIP_FUNC;
+right_flip return RIGHT_FLIP_FUNC;
+left_flip return LEFT_FLIP_FUNC;
+land return LAND_FUNC;
 
-{identifier} printf("IDENTIFIER ");
+incline return INCLINE_VAR;
+altitude return ALTITUDE_VAR;
+temperature return TEMPERATURE_VAR;
+acceleration return ACCELERATION_VAR;
+connection return CONNECTION_VAR;
+
+{identifier} return "IDENTIFIER;
+
+%%
+int yywrap() {return 1;}
+
