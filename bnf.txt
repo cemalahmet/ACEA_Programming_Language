@@ -1,10 +1,10 @@
 # 2.1. Program
 <program> ::= begin <stmts> end
 <stmts> ::= <stmt> | <stmt> <stmts> | <comment> <stmts> | <comment>
-<stmt> ::= <matched_if> | <unmatched_if>
-<non_if_stmt> ::= <assn_stmt> | <assn_declare_stmt> | <do_while_stmt> | <for_stmt> | 
-		  <return_stmt> | <while_stmt> | <input_stmt> | <output_stmt> | 
-		  <function_stmt> | <empty_stmt> | <block_stmt> | <function_definition>
+<stmt> ::= <open_stmt> | <closed_stmt>
+<simple_stmt> ::= <assn_stmt> | <assn_declare_stmt> | <return_stmt> | 
+		  <while_stmt> | <input_stmt> | <output_stmt> | <function_stmt> | 
+		  <empty_stmt> | <block_stmt> | <function_definition>
 <comment> ::= /* <string> */
 <string> ::= <non_empty_string> | <empty>
 <non_empty_string> ::= <char> <string> | <char>
@@ -51,13 +51,19 @@
 <multiple_assn_declare> ::= <assn_declare> | <assn_declare> , <multiple_assn_declare> 
 <assn_declare_stmt> ::= <type_declare> <multiple_assn_declare> ;
 
-<matched_if> ::= if (<expression>) <matched_if> else <matched_if> | <non_if_stmt>
-<unmatched_if> ::= if (<expression>) <stmt> | if (<expression>) <matched_if> else <unmatched_if>
+<closed_stmt> ::= <simple_stmt> |
+		  if (<expression>) <closed_stmt> else <closed_stmt> | 
+		  while (<expression>) <closed_stmt> |
+		  <for_body> <closed_stmt> |
+		  do <closed_stmt> while (<expression>) ;
+<open_stmt> ::= if (<expression>) <simple_stmt> | 
+		if (<expression>) <open_stmt> |
+		if (<expression>) <closed_stmt> else <open_stmt> |
+		while (<expression>) <open_stmt> |
+		<for_body> <open_stmt> |
+		do <open_stmt> while (<expression>) ;
 
-<while_stmt> ::= while (<expression>) <stmt>
-<do_while_stmt> ::= do <stmt> while (<expression>) ;
-
-<for_stmt> ::= for (<init_stmt> <for_expression> <looping_stmt>) <stmt>
+<for_body> ::= for (<init_stmt> <for_expression> <looping_stmt>)
 <init_stmt> ::= <assn_declare_stmt> | <assn_stmt> | <empty_stmt>
 <for_expression> ::= <expression> ; | <empty_stmt>
 <looping_stmt> ::= <assn> | <empty>

@@ -1,19 +1,19 @@
 /* acea */
 %{
 #include <stdio.h>
-
-int lineno = 1;
 %}
 
-%token BEGIN END UNDERSCORE IDENTIFIER LP RP LCB RCB SEMICOLON COMMA FINAL NUM STRING NUM_CONST STRING_CONST ASSIGNMENT_OP COMMENT LOGICAL_NOT_OP IF ELSE FOR DO WHILE RETURN INPUT_FUNC OUTPUT_FUNC CAMERA_ON_OFF_FUNC PHOTO_FUNC TIMER_START_FUNC TIMER_STOP_FUNC TIMER_TIME_FUNC CONNECT_FUNC DISCONNECT_FUNC UP_FUNC FORWARD_FUNC LEFT_FUNC RIGHT_FUNC BACK_FUNC DOWN_FUNC ROTATE_LEFT_FUNC ROTATE_RIGHT_FUNC BACK_FLIP_FUNC FRONT_FLIP_FUNC RIGHT_FLIP_FUNC LEFT_FLIP_FUNC LAND_FUNC INCLINE_VAR ALTITUDE_VAR TEMPERATURE_VAR ACCELERATION_VAR CONNECTION_VAR
+%token BEGIN_PROGRAM END_PROGRAM UNDERSCORE IDENTIFIER LP RP LCB RCB SEMICOLON COMMA FINAL NUM STRING NUM_CONST STRING_CONST ASSIGNMENT_OP COMMENT LOGICAL_NOT_OP IF ELSE FOR DO WHILE RETURN INPUT_FUNC OUTPUT_FUNC CAMERA_ON_OFF_FUNC PHOTO_FUNC TIMER_START_FUNC TIMER_STOP_FUNC TIMER_TIME_FUNC CONNECT_FUNC DISCONNECT_FUNC UP_FUNC FORWARD_FUNC LEFT_FUNC RIGHT_FUNC BACK_FUNC DOWN_FUNC ROTATE_LEFT_FUNC ROTATE_RIGHT_FUNC BACK_FLIP_FUNC FRONT_FLIP_FUNC RIGHT_FLIP_FUNC LEFT_FLIP_FUNC LAND_FUNC INCLINE_VAR ALTITUDE_VAR TEMPERATURE_VAR ACCELERATION_VAR CONNECTION_VAR 
 
 %left MINUS PLUS TIMES DIVIDE MODULO EQUAL_OP NOT_EQUAL_OP GREATER_OP LESS_OP LESS_EQUAL_OP GREATER_EQUAL_OP LOGICAL_AND_OP LOGICAL_OR_OP 
 
+%start program
+
 %%
-program : BEGIN stmts END {printf("Input program is valid.\n"); return 0;};
+program : BEGIN_PROGRAM stmts END_PROGRAM {printf("Input program is valid.\n"); return 0;};
 stmts : stmt | stmt stmts | comment stmts | comment ;
-stmt : matched_if | unmatched_if ;
-non_if_stmt : assn_stmt | assn_declare_stmt | do_while_stmt | for_stmt | return_stmt | while_stmt | input_stmt | output_stmt | function_stmt | empty_stmt | block_stmt | function_definition
+stmt : open_stmt | closed_stmt ;
+simple_stmt : assn_stmt | assn_declare_stmt | return_stmt | input_stmt | output_stmt | function_stmt | empty_stmt | block_stmt | function_definition
 comment : COMMENT ;
 empty : ;
 
@@ -48,11 +48,20 @@ assn : identifier ASSIGNMENT_OP expression ;
 assn_declare : assn | identifier ;
 multiple_assn_declare : assn_declare | assn_declare COMMA  multiple_assn_declare ;
 assn_declare_stmt : type_declare multiple_assn_declare SEMICOLON ;
-matched_if : IF LP expression RP matched_if ELSE matched_if | non_if_stmt ;
-unmatched_if : IF LP expression RP stmt | IF LP expression RP matched_if ELSE unmatched_if ;
-while_stmt : WHILE LP expression RP stmt ;
-do_while_stmt : DO stmt WHILE LP expression RP SEMICOLON ;
-for_stmt : FOR LP init_stmt for_expression looping_stmt RP stmt ;
+
+closed_stmt: simple_stmt
+      | IF LP expression RP closed_stmt ELSE closed_stmt 
+      | WHILE LP expression RP closed_stmt 
+      | for_body closed_stmt
+      | DO closed_stmt WHILE LP expression RP SEMICOLON ;
+open_stmt: IF LP expression RP simple_stmt 
+      | IF LP expression RP open_stmt 
+      | IF LP expression RP closed_stmt ELSE open_stmt 
+      | WHILE LP expression RP open_stmt 
+      | for_body open_stmt
+      | DO open_stmt WHILE LP expression RP SEMICOLON ;
+
+for_body : FOR LP init_stmt for_expression looping_stmt RP ;
 init_stmt : assn_declare_stmt | assn_stmt | empty_stmt ;
 for_expression : expression SEMICOLON | empty_stmt ;
 looping_stmt : assn | empty ;
@@ -67,8 +76,9 @@ builtin_function_no_underscore_no_expression : CAMERA_ON_OFF_FUNC | PHOTO_FUNC T
 builtin_function_no_underscore_with_expression : UP_FUNC | FORWARD_FUNC | LEFT_FUNC | RIGHT_FUNC | BACK_FUNC | DOWN_FUNC | ROTATE_LEFT_FUNC | ROTATE_RIGHT_FUNC ;
 builtin_function : UNDERSCORE UNDERSCORE builtin_function_no_underscore_with_expression LP expression RP | UNDERSCORE UNDERSCORE builtin_function_no_underscore_no_expression LP RP ;
 
-
 %%
 #include "lex.yy.c"
-yyerror(char *s) {fprintf(stderr, "Syntax error on line %d", lineno);}
-main() {return yyparse();}
+int lineno;
+main() {return yyparse();}	
+yyerror(char *s) {fprintf(stderr, "Syntax error on line %d\n", lineno);}
+
