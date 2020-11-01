@@ -65,20 +65,18 @@ for_body : FOR LP init_stmt for_expression looping_stmt RP ;
 init_stmt : assn_declare_stmt | assn_stmt | empty_stmt ;
 for_expression : expression SEMICOLON | empty_stmt ;
 looping_stmt : assn | empty ;
-input_stmt : UNDERSCORE UNDERSCORE INPUT_FUNC LP identifier RP SEMICOLON ;
-output_stmt : UNDERSCORE UNDERSCORE OUTPUT_FUNC LP expression RP SEMICOLON ;
+input_stmt : INPUT_FUNC LP identifier RP SEMICOLON ;
+output_stmt : OUTPUT_FUNC LP expression RP SEMICOLON ;
 function_stmt : function_call SEMICOLON ;
 return_stmt : RETURN SEMICOLON | RETURN expression SEMICOLON ;
 
-builtin_variable_no_underscore : INCLINE_VAR | ALTITUDE_VAR | TEMPERATURE_VAR | ACCELERATION_VAR | CONNECTION_VAR ;
-builtin_variable : UNDERSCORE UNDERSCORE builtin_variable_no_underscore ; 
-builtin_function_no_underscore_no_expression : CAMERA_ON_OFF_FUNC | PHOTO_FUNC TIMER_START_FUNC | TIMER_STOP_FUNC | TIMER_TIME_FUNC | CONNECT_FUNC | DISCONNECT_FUNC | BACK_FLIP_FUNC | FRONT_FLIP_FUNC | RIGHT_FLIP_FUNC | LEFT_FLIP_FUNC | LAND_FUNC ;
-builtin_function_no_underscore_with_expression : UP_FUNC | FORWARD_FUNC | LEFT_FUNC | RIGHT_FUNC | BACK_FUNC | DOWN_FUNC | ROTATE_LEFT_FUNC | ROTATE_RIGHT_FUNC ;
-builtin_function : UNDERSCORE UNDERSCORE builtin_function_no_underscore_with_expression LP expression RP | UNDERSCORE UNDERSCORE builtin_function_no_underscore_no_expression LP RP ;
+builtin_variable : INCLINE_VAR | ALTITUDE_VAR | TEMPERATURE_VAR | ACCELERATION_VAR | CONNECTION_VAR ; 
+builtin_function_name : CAMERA_ON_OFF_FUNC | PHOTO_FUNC | TIMER_START_FUNC | TIMER_STOP_FUNC | TIMER_TIME_FUNC | CONNECT_FUNC | DISCONNECT_FUNC | BACK_FLIP_FUNC | FRONT_FLIP_FUNC | RIGHT_FLIP_FUNC | LEFT_FLIP_FUNC | LAND_FUNC | UP_FUNC | FORWARD_FUNC | LEFT_FUNC | RIGHT_FUNC | BACK_FUNC | DOWN_FUNC | ROTATE_LEFT_FUNC | ROTATE_RIGHT_FUNC ;
+builtin_function : builtin_function_name LP function_call_arguments RP ;
 
 %%
 #include "lex.yy.c"
-int lineno;
+int lineno = 1;
 main() {return yyparse();}	
 yyerror(char *s) {fprintf(stderr, "Syntax error on line %d\n", lineno);}
 

@@ -13,7 +13,7 @@ if (temperature < 30) { /* if temperature is less than 30 degrees Celcius */
 __timer_start();
 
 num i;
-for (i = 0; __timer_time() < 50; i++) {
+for (i = 0; __timer_time() < 50; i = i + 1) {
 	__up(20);
 	__forward(20);
 	__take_photo();
