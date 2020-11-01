@@ -1,6 +1,6 @@
 begin
 
-__connect()
+__connect();
 __up(55);
 num temperature = __temperature;
 if (temperature < 30) { /* if temperature is less than 30 degrees Celcius */

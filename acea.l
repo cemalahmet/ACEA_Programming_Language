@@ -34,7 +34,7 @@ string {return STRING;}
 \- {return MINUS;}
 \+ {return PLUS;}
 \* {return TIMES;} 
-\/ {return DIVIDE
+\/ {return DIVIDE;}
 \% {return MODULO;}
 
 {comment_start}.*{comment_end} {return COMMENT;}
@@ -90,4 +90,3 @@ connection {return CONNECTION_VAR;}
 
 %%
 int yywrap() {return 1;}
-%%
