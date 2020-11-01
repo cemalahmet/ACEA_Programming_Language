@@ -10,7 +10,10 @@ comment_end   \*\/
 string \".*\"
 
 %%
+
 \n {extern int lineno; lineno++;}
+([ ])+ {/* ignore new lines, spaces and tabs */}
+\t+ ;
 
 begin {return BEGIN_PROGRAM;}
 end   {return END_PROGRAM;}

@@ -1,7 +1,0 @@
-
-begin
-
-string text = "Hello World!\n";
-__print(text);
-
-end

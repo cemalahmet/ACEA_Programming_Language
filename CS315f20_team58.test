@@ -1,0 +1,84 @@
+begin
+
+/* Connect to the drone and use primitive functions to control it */
+__connect();
+__up(55); /* levitate 55 centimeters */
+
+num temperature = __temperature;
+if (temperature < 30) { /* if temperature is less than 30 degrees Celcius */
+	__take_photo();
+	__left_flip();
+} else {
+	__front_flip();
+	__rotate_left(20); /* rotate left by 20 degrees */
+}
+
+
+/* go forward and up and take photos for 50 seconds */
+__timer_start();
+num i;
+for (i = 0; __timer_time() < 50; i = i + 1) {
+	__up(20);
+	__forward(20);
+	__take_photo();
+}
+__timer_stop();
+
+__print("The drone took ");
+__print(i + temperature < 30);
+__print(" pictures!\n");
+
+__land();
+
+/* Calculate and display gcd of two numbers using recursion */
+
+
+/* This function calculates the gcd of two constants */
+/* Prereq: both constants are positive whole numbers. */
+num gcd(num x, num y) {
+        if (y != 0)
+                return gcd(y, x % y);
+        else
+                return x;
+}
+
+num x, y;
+__scan(x);
+__scan(y);
+
+num result = gcd(x,y);
+
+__print(result);
+__print("\n");
+
+/* Print the first 40 fibonacci numbers */
+
+num last1 = 1, last2 = 0, temp;
+
+/* Compute and print fibonacci numbers */
+if (number > 0) {
+        __print(last2);
+        __print("\n");
+        number = number - 1;
+}
+
+if (number > 0) {
+        __print(last1);
+        __print("\n");
+        number = number - 1;
+}
+
+while (number > 0) {
+        temp  = last2;
+        last2 = last1;
+        last1 = temp + last1;
+        __print(last1);
+        __print("\n");
+        number = number - 1;
+}
+
+/* Disconnect and end the program */
+
+__disconnect();
+
+end
