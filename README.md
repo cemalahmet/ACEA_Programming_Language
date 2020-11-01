@@ -2,14 +2,13 @@
 
 CS 315 Project  
 
-Hata reproduction:  
+How to use:
+
 ```
 $ git clone https://github.com/cemalahmet/Drone_PL_CS315.git  
 $ cd Drone_PL_CS315  
 $ lex acea.l  
-$ yacc acea.y  
-$ gcc y.tab.c  
-$ ./a.out < drone_example_program.txt  
+$ yacc acea.y
+$ gcc -o acea y.tab.c
+$ ./acea < drone_example_program.txt
 ```
-
-Bunun syntax error at line 4 dememesi gerekiyor.  
